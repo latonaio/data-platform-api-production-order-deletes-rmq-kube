@@ -155,7 +155,7 @@ func (c *DPFMAPICaller) itemDelete(
 		}
 	}
 	// itemがキャンセル取り消しされた場合、headerのキャンセルも取り消す
-	if !*input.ProductionOrder.Item[0].IsMarkedForDeletion {
+	if !*input.Header.Item[0].IsMarkedForDeletion {
 		header := c.HeaderRead(input, log)
 		header.IsMarkedForDeletion = input.Header.Item[0].IsMarkedForDeletion
 		res, err := c.rmq.SessionKeepRequest(nil, c.conf.RMQ.QueueToSQL()[0], map[string]interface{}{"message": header, "function": "ProductionOrderHeader", "runtime_session_id": sessionID})
